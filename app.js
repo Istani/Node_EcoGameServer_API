@@ -72,7 +72,7 @@ async function get_chat() {
             continue;
           }
           if (element.Tag == "_Logins") {
-            continue;
+           // continue;
           }
           var new_line = {
             date: element.Timestamp,
@@ -82,7 +82,7 @@ async function get_chat() {
           //console.log("");
           settings.timestamp_last_chat = element.Timestamp;
           save_settings();
-          await get_info();
+          //await get_info();
         }
       }
     }
