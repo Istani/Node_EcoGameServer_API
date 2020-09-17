@@ -63,13 +63,13 @@ async function get_chat() {
         if (element.Timestamp > settings.timestamp_last_chat) {
           element.Text = striptags(element.Text);
           if (element.Text.startsWith("You gained")) {
-            continue;
+            //continue;
           }
           if (element.Text.indexOf("Blocked!") > 1) {
-            continue;
+            //continue;
           }
           if (element.Text.indexOf("until completion.") > 1) {
-            continue;
+            //continue;
           }
           if (element.Tag == "_Logins") {
            // continue;
