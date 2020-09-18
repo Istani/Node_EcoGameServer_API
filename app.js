@@ -51,10 +51,11 @@ function save_settings() {
 load_settings();
 
 async function get_chat() {
-  request(base_url + "api/v1/chat", async function(error, response, body) {
+  //request.setTimeout(0);
+  request({ url: base_url + "api/v1/chat", timeout: 1000*60*60*60 }, async function(error, response, body) {
     if (error) {
-      //console.error("error:", error); // Print the error if one occurred
-      //console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
+      console.error("error:", error); // Print the error if one occurred
+      console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
     } else {
       var data = JSON.parse(body); // Print the HTML for the Google homepage.
       await save_file("chat", data);
@@ -86,6 +87,7 @@ async function get_chat() {
         }
       }
     }
+    get_info();
     setTimeout(get_chat, 1000 * 10);
   });
 }
@@ -99,10 +101,10 @@ async function get_info() {
     } else {
       var data = JSON.parse(body); // Print the HTML for the Google homepage.
       await save_file("info", data);
-      if (data.TimeSinceStart < settings.timestamp_last_chat) {
-        settings.timestamp_last_chat = 0;
-        save_settings();
-      }
+      //if (data.TimeSinceStart < settings.timestamp_last_chat) {
+      //  settings.timestamp_last_chat = 0;
+      //  save_settings();
+      //}
 
       await get_playstyles();
       await get_playerstats();
