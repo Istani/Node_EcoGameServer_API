@@ -87,7 +87,7 @@ async function get_chat() {
         }
       }
     }
-    get_info();
+    //get_info();
     setTimeout(get_chat, 1000 * 10);
   });
 }
