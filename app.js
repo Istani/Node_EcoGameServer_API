@@ -15,6 +15,9 @@ if (fs.existsSync(".env")) {
   fs.writeFileSync(".env.example", config_example);
 }
 
+var log = require("./own_modules/log.js").msg;
+var err = require("./own_modules/log.js").error;
+
 const base_url = "http://" + process.env.SERVER_IP + ":" + process.env.SERVER_WEB_PORT + "/";
 const request = require("request");
 const striptags = require("striptags");
@@ -51,8 +54,9 @@ function save_settings() {
 load_settings();
 
 async function get_chat() {
+  var  last_day=parseInt(settings.timestamp_last_chat/60/60/24);
   //request.setTimeout(0);
-  request({ url: base_url + "api/v1/chat", timeout: 1000*60*60*60 }, async function(error, response, body) {
+  request({ url: base_url + "api/v1/chat?startDay="+last_day+"&endDate="+(last_day+1), timeout: 1000*60*60*24*7 }, async function(error, response, body) {
     if (error) {
       console.error("error:", error); // Print the error if one occurred
       console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
@@ -76,10 +80,12 @@ async function get_chat() {
            // continue;
           }
           var new_line = {
+            tag: element.Tag,
             date: element.Timestamp,
             text: element.Text
           };
-          console.log(JSON.stringify(new_line));
+          //console.log(JSON.stringify(new_line));
+          log(element.Timestamp + ": " + element.Text, element.Tag);
           //console.log("");
           settings.timestamp_last_chat = element.Timestamp;
           save_settings();
