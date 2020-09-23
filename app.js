@@ -80,12 +80,13 @@ async function get_chat() {
            // continue;
           }
           var new_line = {
+            user: element.Username,
             tag: element.Tag,
             date: element.Timestamp,
             text: element.Text
           };
           //console.log(JSON.stringify(new_line));
-          log(element.Timestamp + ": " + element.Text, element.Tag);
+          log(element.Timestamp + ": '" +  element.Username + "': " + element.Text, element.Tag);
           //console.log("");
           settings.timestamp_last_chat = element.Timestamp;
           save_settings();
