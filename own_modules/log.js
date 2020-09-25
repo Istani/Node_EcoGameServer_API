@@ -24,6 +24,14 @@ const colors = {
     default: "\x1b[93m",
     error: "\x1b[103m"
   },
+  _Reputation: {
+    default: "\x1b[93m",
+    error: "\x1b[103m"
+  },
+  _Objectives: {
+    default: "\x1b[93m",
+    error: "\x1b[103m"
+  },
   _Yourtrades: {
     default: "\x1b[93m",
     error: "\x1b[103m"
