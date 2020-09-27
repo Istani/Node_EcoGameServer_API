@@ -55,6 +55,7 @@ load_settings();
 
 async function get_chat() {
   var  last_day=parseInt(settings.timestamp_last_chat/60/60/24);
+  var need_save=0;
   //request.setTimeout(0);
   request({ url: base_url + "api/v1/chat?startDay="+last_day+"&endDate="+(last_day+1), timeout: 1000*60*60*24*7 }, async function(error, response, body) {
     if (error) {
@@ -62,10 +63,11 @@ async function get_chat() {
       console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
     } else {
       var data = JSON.parse(body); // Print the HTML for the Google homepage.
-      await save_file("chat", data);
+      //await save_file("chat", data);
       for (let data_index = 0; data_index < data.length; data_index++) {
         const element = data[data_index];
         if (element.Timestamp > settings.timestamp_last_chat) {
+          need_save=1;
           element.Text = striptags(element.Text);
           if (element.Text.startsWith("You gained")) {
             //continue;
@@ -93,6 +95,7 @@ async function get_chat() {
           //await get_info();
         }
       }
+      if (need_save==1) { await save_file("chat", data); }
     }
     //get_info();
     setTimeout(get_chat, 1000 * 10);
